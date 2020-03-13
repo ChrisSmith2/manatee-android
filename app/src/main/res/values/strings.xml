@@ -49,6 +49,7 @@
     <string name="pref_showGradeColor">Highlight grades</string>
     <string name="pref_showGradeColor_summ">The lighter the color, the better the grade</string>
     <string name="pref_chooseHidden">Choose hidden classes</string>
+    <string name="pref_editNicknames">Edit class nicknames</string>
     <string name="pref_chooseWeighted">Choose weighted classes</string>
     <string name="pref_chooseExcluded">Choose excluded classes</string>
     <string name="pref_category_notifications">NOTIFICATIONS</string>

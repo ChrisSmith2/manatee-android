@@ -17,6 +17,7 @@
             android:dialogTitle="@string/pref_chooseHidden"
             android:key="pref_hiddenClasses"
             android:title="@string/pref_chooseHidden" />
+        <Preference android:title="@string/pref_editNicknames" />
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_gpa" >
