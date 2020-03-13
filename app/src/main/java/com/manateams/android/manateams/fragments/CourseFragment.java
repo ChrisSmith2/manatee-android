@@ -1,7 +1,9 @@
 package com.manateams.android.manateams.fragments;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -30,7 +32,9 @@ import com.manateams.scraper.data.Course;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Set;
 
 public class CourseFragment extends Fragment implements AsyncTaskCompleteListener, SwipeRefreshLayout.OnRefreshListener {
 
@@ -62,6 +66,34 @@ public class CourseFragment extends Fragment implements AsyncTaskCompleteListene
         setupViews();
     }
 
+    private Course[] getVisibleCourses() {
+        if (courses != null) {
+            SharedPreferences defaultPrefs = PreferenceManager
+                    .getDefaultSharedPreferences(getActivity());
+
+            Set<String> savedHidden = defaultPrefs.getStringSet(
+                    "pref_hiddenClasses", null);
+            if (savedHidden != null && savedHidden.size() != 0) {
+                String[] hiddenClasses = savedHidden.toArray(new String[savedHidden.size()]);
+                ArrayList<Course> visibleCourses = new ArrayList<Course>();
+                for (int i = 0; i < courses.length; i++) {
+                    boolean hidden = false;
+                    for (int j = 0; j < hiddenClasses.length; j++) {
+                        if (courses[i].title.equals(hiddenClasses[j])) {
+                            hidden = true;
+                            break;
+                        }
+                    }
+                    if (!hidden)
+                        visibleCourses.add(courses[i]);
+                }
+                return visibleCourses.toArray(new Course[visibleCourses.size()]);
+            }
+            return courses;
+        }
+        return null;
+    }
+
     private void setupViews() {
         lastUpdatedText = (TextView) getActivity().findViewById(R.id.text_lastupdated);
         // Set relative time for last updated
@@ -72,7 +104,7 @@ public class CourseFragment extends Fragment implements AsyncTaskCompleteListene
         coursesList.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         coursesList.setItemAnimator(new DefaultItemAnimator());
         // Set the grade cards
-        adapter = new CourseAdapter(getActivity(), courses);
+        adapter = new CourseAdapter(getActivity(), getVisibleCourses());
         coursesList.setAdapter(adapter);
         coursesList.addOnItemTouchListener(
                 new RecyclerItemClickListener(this.getActivity(), new RecyclerItemClickListener.OnItemClickListener() {

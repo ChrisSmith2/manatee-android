@@ -44,9 +44,11 @@
     <string name="text_card_category_assignment_weight_null">N/A</string>
     <string name="title_activity_settings">Settings</string>
     <string name="pref_category_grades">GRADES</string>
+    <string name="pref_category_classes">CLASSES</string>
     <string name="pref_category_gpa">GPA</string>
     <string name="pref_showGradeColor">Highlight grades</string>
     <string name="pref_showGradeColor_summ">The lighter the color, the better the grade</string>
+    <string name="pref_chooseHidden">Choose hidden classes</string>
     <string name="pref_chooseWeighted">Choose weighted classes</string>
     <string name="pref_chooseExcluded">Choose excluded classes</string>
     <string name="pref_category_notifications">NOTIFICATIONS</string>

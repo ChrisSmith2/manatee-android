@@ -12,6 +12,13 @@
             android:title="@string/pref_showGradeColor" />
     </PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/pref_category_classes" >
+        <MultiSelectListPreference
+            android:dialogTitle="@string/pref_chooseHidden"
+            android:key="pref_hiddenClasses"
+            android:title="@string/pref_chooseHidden" />
+    </PreferenceCategory>
+
     <PreferenceCategory android:title="@string/pref_category_gpa" >
 
         <MultiSelectListPreference

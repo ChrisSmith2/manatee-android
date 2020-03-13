@@ -23,6 +23,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.settings);
 
+        MultiSelectListPreference hiddenPreference = (MultiSelectListPreference) findPreference("pref_hiddenClasses");
+
         MultiSelectListPreference weightedPreference = (MultiSelectListPreference) findPreference("pref_weightedClasses");
 
         MultiSelectListPreference excludedPreference = (MultiSelectListPreference) findPreference("pref_excludedClasses");
@@ -33,6 +35,8 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         for (int i = 0; i < courses.length; i++) {
             classes[i] = courses[i].title;
         }
+        hiddenPreference.setEntryValues(classes);
+        hiddenPreference.setEntries(classes);
         weightedPreference.setEntryValues(classes);
         weightedPreference.setEntries(classes);
         excludedPreference.setEntryValues(classes);
