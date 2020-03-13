@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -113,6 +114,10 @@ public class GPAFragment extends Fragment implements View.OnClickListener {
 
                             @Override
                             public void onShowcaseViewShow(ShowcaseView showcaseView) {
+
+                            }
+
+                            public void onShowcaseViewTouchBlocked(MotionEvent motionEvent) {
 
                             }
                         })
