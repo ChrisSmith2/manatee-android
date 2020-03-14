@@ -67,31 +67,28 @@ public class CourseFragment extends Fragment implements AsyncTaskCompleteListene
     }
 
     private Course[] getVisibleCourses() {
-        if (courses != null) {
-            SharedPreferences defaultPrefs = PreferenceManager
-                    .getDefaultSharedPreferences(getActivity());
+        SharedPreferences defaultPrefs = PreferenceManager
+                .getDefaultSharedPreferences(getActivity());
 
-            Set<String> savedHidden = defaultPrefs.getStringSet(
-                    "pref_hiddenClasses", null);
-            if (savedHidden != null && savedHidden.size() != 0) {
-                String[] hiddenClasses = savedHidden.toArray(new String[savedHidden.size()]);
-                ArrayList<Course> visibleCourses = new ArrayList<Course>();
-                for (int i = 0; i < courses.length; i++) {
-                    boolean hidden = false;
-                    for (int j = 0; j < hiddenClasses.length; j++) {
-                        if (courses[i].title.equals(hiddenClasses[j])) {
-                            hidden = true;
-                            break;
-                        }
+        Set<String> savedHidden = defaultPrefs.getStringSet(
+                "pref_hiddenClasses", null);
+        if (savedHidden != null && savedHidden.size() != 0) {
+            String[] hiddenClasses = savedHidden.toArray(new String[savedHidden.size()]);
+            ArrayList<Course> visibleCourses = new ArrayList<Course>();
+            for (int i = 0; i < courses.length; i++) {
+                boolean hidden = false;
+                for (int j = 0; j < hiddenClasses.length; j++) {
+                    if (courses[i].title.equals(hiddenClasses[j])) {
+                        hidden = true;
+                        break;
                     }
-                    if (!hidden)
-                        visibleCourses.add(courses[i]);
                 }
-                return visibleCourses.toArray(new Course[visibleCourses.size()]);
+                if (!hidden)
+                    visibleCourses.add(courses[i]);
             }
-            return courses;
+            return visibleCourses.toArray(new Course[visibleCourses.size()]);
         }
-        return null;
+        return courses;
     }
 
     private void setupViews() {
@@ -231,7 +228,7 @@ public class CourseFragment extends Fragment implements AsyncTaskCompleteListene
     public void startAssignmentActivity(int courseIndex) {
         Intent intent = new Intent(getActivity(), AssignmentActivity.class);
         intent.putExtra(Constants.EXTRA_COURSEINDEX, courseIndex);
-        intent.putExtra(Constants.EXTRA_COURSETITLE, dataManager.getCourseName(courses[courseIndex]));
+        intent.putExtra(Constants.EXTRA_COURSETITLE, dataManager.getCourseName(getVisibleCourses()[courseIndex]));
         intent.putExtra(Constants.EXTRA_COURSEID, courses[courseIndex].courseId);
         startActivity(intent);
 
