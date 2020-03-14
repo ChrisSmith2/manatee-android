@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.manateams.android.manateams" >
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    package="com.manateams.android.manateams">
 
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme.Base" >
-        <activity android:name=".MainActivity"
+        android:theme="@style/AppTheme.Base">
+        <activity android:name=".NicknameActivity"
+            android:label="@string/pref_editNicknames">
+        </activity>
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,29 +24,32 @@
         <activity
             android:name=".CoursesActivity"
             android:label="@string/title_activity_courses"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".AssignmentActivity"
             android:label="@string/title_activity_assignment"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".CoursesActivity" />
         </activity>
 
-        <service
-            android:name=".service.GradeScrapeService"
-            android:exported="false" >
-        </service>
-
-        <receiver android:name=".service.BootReceiver"
+        <receiver
+            android:name=".service.BootReceiver"
             android:enabled="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".service.AlarmReceiver"></receiver>
+
+        <receiver android:name=".service.AlarmReceiver" />
+        <service
+            android:name=".service.GradeScrapeService"
+            android:exported="false"></service>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

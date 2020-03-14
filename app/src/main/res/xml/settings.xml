@@ -17,7 +17,12 @@
             android:dialogTitle="@string/pref_chooseHidden"
             android:key="pref_hiddenClasses"
             android:title="@string/pref_chooseHidden" />
-        <Preference android:title="@string/pref_editNicknames" />
+        <Preference android:title="@string/pref_editNicknames">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:targetPackage="com.manateams.android.manateams"
+                android:targetClass="com.manateams.android.manateams.NicknameActivity" />
+        </Preference>
     </PreferenceCategory>
 
     <PreferenceCategory android:title="@string/pref_category_gpa" >
