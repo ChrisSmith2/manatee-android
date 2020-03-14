@@ -7,4 +7,10 @@
     tools:context=".NicknameActivity">
     <include layout="@layout/toolbar_layout" />
 
+    <fragment
+        android:id="@+id/nickname_settings"
+        android:name="com.manateams.android.manateams.fragments.NicknameFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?attr/actionBarSize"/>
 </android.support.constraint.ConstraintLayout>
