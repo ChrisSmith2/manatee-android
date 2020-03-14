@@ -275,6 +275,20 @@ public class DataManager {
         return new Gson().fromJson(data, new TypeToken<ClassGrades[]>(){}.getType());
     }
 
+    // Returns course nickname if one exists, otherwise returns course title
+    public String getCourseName(Course course) {
+        if (course != null) {
+            String title = course.title;
+            SharedPreferences defaultPrefs = PreferenceManager
+                    .getDefaultSharedPreferences(context);
+            String nickname = defaultPrefs.getString("pref_nickname_" + title, title);
+            if (!nickname.trim().isEmpty())
+                return nickname;
+            return title;
+        }
+        return null;
+    }
+
     private String readFromFile(String name) {
         String ret = "";
         try {

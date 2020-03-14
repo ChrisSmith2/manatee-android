@@ -231,7 +231,7 @@ public class CourseFragment extends Fragment implements AsyncTaskCompleteListene
     public void startAssignmentActivity(int courseIndex) {
         Intent intent = new Intent(getActivity(), AssignmentActivity.class);
         intent.putExtra(Constants.EXTRA_COURSEINDEX, courseIndex);
-        intent.putExtra(Constants.EXTRA_COURSETITLE, courses[courseIndex].title);
+        intent.putExtra(Constants.EXTRA_COURSETITLE, dataManager.getCourseName(courses[courseIndex]));
         intent.putExtra(Constants.EXTRA_COURSEID, courses[courseIndex].courseId);
         startActivity(intent);
 

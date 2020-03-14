@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.manateams.android.manateams.R;
 import com.manateams.android.manateams.util.Constants;
+import com.manateams.android.manateams.util.DataManager;
 import com.manateams.android.manateams.util.Utils;
 import com.manateams.scraper.data.Course;
 import com.manateams.scraper.data.GradeValue;
@@ -83,7 +84,7 @@ public class CourseAdapter extends RecyclerView.Adapter<CourseAdapter.ViewHolder
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         Course course = courses[position];
         viewHolder.setIsRecyclable(false);
-        viewHolder.titleText.setText(course.title);
+        viewHolder.titleText.setText(new DataManager(context).getCourseName(course));
         // Set a different color
         viewHolder.colorBar.setBackgroundColor(Color.parseColor(Constants.COLORS[position % Constants.COLORS.length]));
 
