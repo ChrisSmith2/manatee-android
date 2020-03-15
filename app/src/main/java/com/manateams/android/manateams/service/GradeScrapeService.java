@@ -139,13 +139,14 @@ public class GradeScrapeService extends IntentService implements AsyncTaskComple
             builder.setCategory(Notification.CATEGORY_SOCIAL);
             builder.setVisibility(Notification.VISIBILITY_PRIVATE);
         }
+        String courseTitle = dataManager.getCourseName(courses[courseIndex]);
         if (!isNewGrade) {
             builder.setContentTitle("Grade changed");
-            builder.setContentText("Your grade in " + courses[courseIndex].title + " has changed");
-            builder.setStyle(new NotificationCompat.BigTextStyle().bigText("Your grade in " + courses[courseIndex].title + " has changed from a " + oldGrade.toString() + " to a " + newGrade.toString()));
+            builder.setContentText("Your grade in " + courseTitle + " has changed");
+            builder.setStyle(new NotificationCompat.BigTextStyle().bigText("Your grade in " + courseTitle + " has changed from a " + oldGrade.toString() + " to a " + newGrade.toString()));
         } else {
             builder.setContentTitle("New grade");
-            builder.setContentText("You have a new " + newGrade.toString() + " in " + courses[courseIndex].title);
+            builder.setContentText("You have a new " + newGrade.toString() + " in " + courseTitle);
         }
         Intent resultIntent = new Intent(this, CoursesActivity.class);
         builder.setContentIntent(PendingIntent.getActivity(this, 0, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT));
