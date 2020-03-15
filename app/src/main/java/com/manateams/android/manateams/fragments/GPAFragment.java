@@ -247,7 +247,7 @@ public class GPAFragment extends Fragment implements View.OnClickListener {
         }
         @Override
         public CharSequence getPageTitle(int position) {
-            return courses[position].title;
+            return dataManager.getCourseName(courses[position]);
         }
         @Override
         public int getCount() {
