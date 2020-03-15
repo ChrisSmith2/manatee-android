@@ -154,8 +154,10 @@ public class GradeScrapeService extends IntentService implements AsyncTaskComple
 
         //Respect user option
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        // Ensures new notifications get added instead of replacing old notifications (if present)
+        int id = (int) System.currentTimeMillis(); // Returns unique id according to time
         if(prefs.getBoolean("pref_showNotifications",true)){
-            notificationManager.notify(1, builder.build());
+            notificationManager.notify(id, builder.build());
         }
     }
 
