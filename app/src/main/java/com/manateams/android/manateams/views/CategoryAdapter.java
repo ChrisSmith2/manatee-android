@@ -49,7 +49,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                         viewHolder.colorBar.setBackgroundColor(Color.parseColor(Constants.COLORS[position % Constants.COLORS.length]));
 
                         if(category.weight >= 0) {
-                            viewHolder.weightText.setText(((int) category.weight) + "%");
+                            viewHolder.weightText.setText(((int) category.weight) + "");
                         } else {
                             viewHolder.weightText.setText(context.getString(R.string.text_card_category_assignment_weight_null));
                         }
