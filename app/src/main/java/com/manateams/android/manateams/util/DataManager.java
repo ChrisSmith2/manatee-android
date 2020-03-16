@@ -30,10 +30,9 @@ public class DataManager {
         this.context = context;
     }
 
-    public void setCredentials(String username, String password, String studentId,String TEAMSuser,String TEAMSpass) {
+    public void setCredentials(String username, String password, String TEAMSuser, String TEAMSpass) {
         setUsername(username);
         setPassword(password);
-        setStudentId(studentId);
         setTEAMSuser(TEAMSuser);
         setTEAMSpass(TEAMSpass);
     }

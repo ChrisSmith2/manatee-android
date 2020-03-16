@@ -70,9 +70,15 @@ public class AssignmentLoadTask extends AsyncTask<String, String, ClassGrades[]>
             }
 
             // Get the appropriate user identification info
-            final String userIdentification;
-            final String newUserIdentification = retriever.getNewUserIdentification(username, password, studentID, TEAMSuser, TEAMSpass, cookie, userType);
-            userIdentification = newUserIdentification;
+            final String[] studentIDs = retriever.getStudentIDs(username, password, TEAMSuser, TEAMSpass, cookie, userType);
+            final String newUserIdentification;
+            if (studentIDs != null) { // parent user
+                newUserIdentification = retriever.getNewUserIdentification(studentID, cookie, userType);
+            } else { // student user
+                newUserIdentification = "";
+            }
+
+            final String userIdentification = newUserIdentification;
             dataManager.setUserIdentification(newUserIdentification);
 
             // Get the HTML of the main page

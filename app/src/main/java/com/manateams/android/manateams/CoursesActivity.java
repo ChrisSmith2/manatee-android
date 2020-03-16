@@ -150,7 +150,7 @@ public class CoursesActivity extends AppCompatActivity {
         int id = item.getItemId();
         switch(id) {
             case R.id.action_logout:
-                dataManager.setCredentials(null, null, null,null,null);
+                dataManager.setCredentials(null, null, null, null);
                 Course[] courses = dataManager.getCourseGrades();
                 for(int i = 0; i < courses.length; i++) {
                     dataManager.setClassGrades(null, courses[i].courseId);
@@ -159,6 +159,7 @@ public class CoursesActivity extends AppCompatActivity {
                 dataManager.setCourseGrades(null);
                 dataManager.invalidateCookie();
                 dataManager.setUserIdentification(null);
+                dataManager.setStudentId(null);
                 Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent);
                 finish();

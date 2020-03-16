@@ -28,7 +28,7 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
     protected Course[] doInBackground(String... params) {
         final String username = params[0];
         final String password = params[1];
-        final String studentId = params[2];
+        String studentId = params[2];
         final String TEAMSuser = params[3];
         final String TEAMSpass = params[4];
 
@@ -52,15 +52,32 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
             }
 
             // Get the appropriate user identification info
-            final String userIdentification;
-            final String newUserIdentification = retriever.getNewUserIdentification(username, password, studentId, TEAMSuser, TEAMSpass, cookie, userType);
-            userIdentification = newUserIdentification;
+            final String[] studentIDs = retriever.getStudentIDs(username, password, TEAMSuser, TEAMSpass, cookie, userType);
+            final String newUserIdentification;
+            if (studentIDs != null) { // parent user
+                if (studentId == null) {
+                    // ask for which student ID
+                    studentId = studentIDs[0];
+                }
+                newUserIdentification = retriever.getNewUserIdentification(studentId, cookie, userType);
+            } else { // student user
+                if (studentId == null) {
+                    // determine student id using username
+                    studentId = username.substring(1);
+                }
+                newUserIdentification = "";
+            }
+
+            final String userIdentification = newUserIdentification;
             dataManager.setUserIdentification(newUserIdentification);
 
             // Get the HTML of the main page
             final String averageHTML = retriever.getTEAMSPage("/selfserve/PSSViewReportCardsAction.do", "", cookie, userType, userIdentification);
             dataManager.setAverageHtml(averageHTML);
-            return parser.parseAverages(averageHTML);
+            Course[] courses = parser.parseAverages(averageHTML);
+            if (dataManager.getStudentId() == null && courses != null) // When first time logging in (no studentID set) and login is successful
+                dataManager.setStudentId(studentId);
+            return courses;
         } catch(Exception e) {
             e.printStackTrace();
             dataManager.invalidateCookie();
