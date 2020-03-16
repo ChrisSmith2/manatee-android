@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
 
     public void selectStudent(final String[] studentIDs, final String[] studentNames) {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
-        alert.setTitle("Select a student");
+        alert.setTitle(R.string.select_student_title);
         alert.setItems(studentNames, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

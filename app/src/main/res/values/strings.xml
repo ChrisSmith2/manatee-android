@@ -56,6 +56,7 @@
     <string name="action_share">Share</string>
     <string name="secondary_login_info">If you use separate credentials for your TEAMS account, enter them below</string>
     <string name="secondary_login_title">Secondary Login</string>
+    <string name="select_student_title">Select a student</string>
     <string name="text_gpa_default">GPA: 4.205 / 3.057</string>
     <string name="text_title">manaTEAMS</string>
     <string name="text_people">By Neil Patil and Ehsan Asdar</string>
