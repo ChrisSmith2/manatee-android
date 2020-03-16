@@ -57,7 +57,7 @@ public class AssignmentLoadTask extends AsyncTask<String, String, ClassGrades[]>
 
         try {
             // Get the user type
-            final TEAMSUserType userType = retriever.getUserType(username);
+            final TEAMSUserType userType = (TEAMSuser != null && TEAMSuser.length() > 0) ? retriever.getUserType(TEAMSuser) : retriever.getUserType(username);
 
             // Get the appropriate cookie
             final String cookie;
@@ -70,9 +70,9 @@ public class AssignmentLoadTask extends AsyncTask<String, String, ClassGrades[]>
             }
 
             // Get the appropriate user identification info
-            final String[] studentIDs = retriever.getStudentIDs(username, password, TEAMSuser, TEAMSpass, cookie, userType);
+            final String[][] studentIDsAndNames = retriever.getStudentIDsAndNames(username, password, TEAMSuser, TEAMSpass, cookie, userType);
             final String newUserIdentification;
-            if (studentIDs != null) { // parent user
+            if (studentIDsAndNames != null) { // parent user
                 newUserIdentification = retriever.getNewUserIdentification(studentID, cookie, userType);
             } else { // student user
                 newUserIdentification = "";

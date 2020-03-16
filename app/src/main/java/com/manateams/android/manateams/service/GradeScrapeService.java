@@ -75,7 +75,8 @@ public class GradeScrapeService extends IntentService implements AsyncTaskComple
             dataManager.setCourseGrades(courses);
             dataManager.setOverallGradesLastUpdated();
 
-            checkForGradeChanges(oldCourses, courses);
+            if (oldCourses != null)
+                checkForGradeChanges(oldCourses, courses);
             for (Course c : courses) {
                 if (c.semesters[1].average.value != -1) {
                     for (int i = c.semesters[1].cycles.length - 1; i >= 0; i--) {

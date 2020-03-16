@@ -3,6 +3,7 @@ package com.manateams.android.manateams.asynctask;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.manateams.android.manateams.MainActivity;
 import com.manateams.android.manateams.util.Constants;
 import com.manateams.android.manateams.util.DataManager;
 import com.manateams.scraper.TEAMSGradeParser;
@@ -17,11 +18,20 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
     private AsyncTaskCompleteListener callback;
     private Context context;
     private boolean showDialog;
+    private boolean promptForStudent = false;
+    private static MainActivity activity;
 
     public CourseLoadTask(AsyncTaskCompleteListener callback, Context context) {
         this.callback = callback;
         this.context = context;
         this.showDialog = showDialog;
+    }
+
+    public CourseLoadTask(AsyncTaskCompleteListener callback, Context context, MainActivity a) {
+        this.callback = callback;
+        this.context = context;
+        this.showDialog = showDialog;
+        this.activity = a;
     }
 
     @Override
@@ -39,7 +49,7 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
 
         try {
             // Get the user type
-            final TEAMSUserType userType = retriever.getUserType(username);
+            final TEAMSUserType userType = (TEAMSuser != null && TEAMSuser.length() > 0) ? retriever.getUserType(TEAMSuser) : retriever.getUserType(username);
 
             // Get the appropriate cookie
             final String cookie;
@@ -52,12 +62,19 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
             }
 
             // Get the appropriate user identification info
-            final String[] studentIDs = retriever.getStudentIDs(username, password, TEAMSuser, TEAMSpass, cookie, userType);
+            final String[][] studentIDsAndNames = retriever.getStudentIDsAndNames(username, password, TEAMSuser, TEAMSpass, cookie, userType);
             final String newUserIdentification;
-            if (studentIDs != null) { // parent user
+            if (studentIDsAndNames != null) { // parent user
                 if (studentId == null) {
                     // ask for which student ID
-                    studentId = studentIDs[0];
+                    promptForStudent = true;
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            activity.selectStudent(studentIDsAndNames[0], studentIDsAndNames[1]);
+                        }
+                    });
+                    return null;
                 }
                 newUserIdentification = retriever.getNewUserIdentification(studentId, cookie, userType);
             } else { // student user
@@ -87,6 +104,7 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
 
     @Override
     protected void onPostExecute(Course[] courses) {
-        callback.onCoursesLoaded(courses);
+        if (!promptForStudent)
+            callback.onCoursesLoaded(courses);
     }
 }

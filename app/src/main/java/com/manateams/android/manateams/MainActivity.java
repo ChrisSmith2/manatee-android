@@ -149,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
                 loginButton.setFocusableInTouchMode(false);
                 loginButton.setClickable(false);
                 loginButton.setEnabled(false);
-                new CourseLoadTask(this, this).execute(username, password, null,"","");
+                new CourseLoadTask(this, this, this).execute(username, password, null,"","");
             } else {
                 Toast.makeText(this, getString(R.string.toast_fill_info), Toast.LENGTH_SHORT).show();
             }
@@ -158,6 +158,20 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
             loggingIn = false;
             loginLoadingLayout.setVisibility(View.GONE);
         }
+    }
+
+    public void selectStudent(final String[] studentIDs, final String[] studentNames) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle("Select a student");
+        alert.setItems(studentNames, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String studentID = studentIDs[which];
+                new CourseLoadTask(MainActivity.this, getApplicationContext()).execute(username, password, studentID, TEAMSuser, TEAMSpass);
+            }
+        });
+        alert.setCancelable(false);
+        alert.show();
     }
 
     @Override
@@ -190,7 +204,7 @@ public class MainActivity extends AppCompatActivity implements AsyncTaskComplete
                         loggingIn = true;
                         TEAMSuser = ((EditText)v.findViewById(R.id.backupusername)).getText().toString();
                          TEAMSpass = ((EditText)v.findViewById(R.id.backuppassword)).getText().toString();
-                         new CourseLoadTask(MainActivity.this, getApplicationContext()).execute(username, password, null, TEAMSuser, TEAMSpass);
+                         new CourseLoadTask(MainActivity.this, getApplicationContext(), MainActivity.this).execute(username, password, null, TEAMSuser, TEAMSpass);
                     }
                 });
                 alert.show();
