@@ -66,15 +66,19 @@ public class CourseLoadTask extends AsyncTask<String, String, Course[]> {
             final String newUserIdentification;
             if (studentIDsAndNames != null) { // parent user
                 if (studentId == null) {
-                    // ask for which student ID
-                    promptForStudent = true;
-                    activity.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            activity.selectStudent(studentIDsAndNames[0], studentIDsAndNames[1]);
-                        }
-                    });
-                    return null;
+                    if (studentIDsAndNames[0].length > 1) {
+                        // ask for which student ID
+                        promptForStudent = true;
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                activity.selectStudent(studentIDsAndNames[0], studentIDsAndNames[1]);
+                            }
+                        });
+                        return null;
+                    } else if (studentIDsAndNames[0].length == 1){
+                        studentId = studentIDsAndNames[0][0];
+                    }
                 }
                 newUserIdentification = retriever.getNewUserIdentification(studentId, cookie, userType);
             } else { // student user
