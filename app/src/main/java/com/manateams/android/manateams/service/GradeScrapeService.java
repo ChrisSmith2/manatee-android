@@ -100,7 +100,7 @@ public class GradeScrapeService extends IntentService implements AsyncTaskComple
 
     public void checkForGradeChanges(Course[] oldCourses, Course[] newCourses) {
         for (int i = 0; i < newCourses.length; i++) {
-            if (i < newCourses.length) {
+            if (i < newCourses.length && i < oldCourses.length) {
                 Course oldCourse = oldCourses[i];
                 Course newCourse = newCourses[i];
                 for (int d = 0; d < oldCourse.semesters.length; d++) {
